@@ -1,0 +1,43 @@
+import os
+import datetime
+
+TASKS_FILE = "tasks.txt"
+
+# ---------- Helper Functions ----------
+
+def load_tasks():
+    tasks = []
+    if os.path.exists(TASKS_FILE):
+        with open(TASKS_FILE, 'r') as f:
+            for line in f:
+                task_data = line.strip().split('|')
+                if len(task_data) == 3:
+                    tasks.append({
+                        'title': task_data[0],
+                        'date': task_data[1],
+                        'status': task_data[2]
+                    })
+    return tasks
+
+def save_tasks(tasks):
+    with open(TASKS_FILE, 'w') as f:
+        for task in tasks:
+            f.write(f"{task['title']}|{task['date']}|{task['status']}\n")
+
+def display_tasks(tasks):
+    if not tasks:
+        print("\nNo tasks found.\n")
+        return
+    print("\nYour Tasks:")
+    print("-" * 40)
+    for idx, task in enumerate(tasks, 1):
+        print(f"{idx}. {task['title']} (Due: {task['date']}) - [{task['status']}]")
+    print("-" * 40)
+
+def add_task():
+    title = input("Enter task title: ").strip()
+    date = input("Enter due date (YYYY-MM-DD): ").strip()
+    tasks = load_tasks()
+    tasks.append({'title': title, 'date': date, 'status': 'Pending'})
+    sav
+
